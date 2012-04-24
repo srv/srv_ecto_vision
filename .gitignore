@@ -1,0 +1,8 @@
+
+*~
+octave-core
+build/
+._*
+lib
+bin
+*.pyc

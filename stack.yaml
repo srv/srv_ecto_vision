@@ -1,0 +1,11 @@
+Catkin-ProjectName: srv_ecto_vision
+Version: 0.1.0
+Description: Ecto cells and scripts from the SRV group.
+Author: Stephan Wirth <stephan.wirth@uib.es>
+Maintainer: Stephan Wirth <stephan.wirth@uib.es>
+Homepage: http://srv.uib.es
+
+Depends: catkin, boost, ecto, opencv2
+
+Catkin-CopyrightType:  gpl
+Catkin-DebRulesType: cmake
