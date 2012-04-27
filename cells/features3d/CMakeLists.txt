@@ -20,6 +20,8 @@ ectomodule(features3d
   sync_check.cpp
   correspondence_finder.cpp
   extract_rows.cpp
+  transform.cpp
+  model_builder.cpp
 )
 
 include_directories(SYSTEM ${ROS_INCLUDE_DIRS} ${ecto_pcl_INCLUDE_DIRS})
