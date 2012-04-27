@@ -17,8 +17,9 @@ ectomodule(features3d
   key_points_to_points.cpp
   stereo_depth_estimator.cpp
   points_to_point_cloud.cpp
-  descriptor_picker.cpp
   sync_check.cpp
+  correspondence_finder.cpp
+  extract_rows.cpp
 )
 
 include_directories(SYSTEM ${ROS_INCLUDE_DIRS} ${ecto_pcl_INCLUDE_DIRS})
