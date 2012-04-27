@@ -38,14 +38,16 @@ def do_ecto():
   kp2mat_left = KeypointsToMat()
   kp2mat_right = KeypointsToMat()
 
-  matches_to_indices = features3d.MatchesToIndices();
-  key_points_to_points_left = features3d.KeyPointsToPoints();
-  key_points_to_points_right = features3d.KeyPointsToPoints();
+  matches_to_indices = features3d.MatchesToIndices()
+  key_points_to_points_left = features3d.KeyPointsToPoints()
+  key_points_to_points_right = features3d.KeyPointsToPoints()
 
   stereo_depth_estimator = features3d.StereoDepthEstimator(
       camera_info_left_file="/home/stwirth/uib-ros/fugu/fugu_configurations/camera_comp_wide/calibration_cylinder_water_left.yaml",
       camera_info_right_file="/home/stwirth/uib-ros/fugu/fugu_configurations/camera_comp_wide/calibration_cylinder_water_right.yaml");
-  points_to_point_cloud = features3d.PointsToPointCloud();
+  points_to_point_cloud = features3d.PointsToPointCloud()
+
+  descriptor_picker = features3d.ExtractRows()
 
   #setup the processing graph
   graph = [
@@ -88,6 +90,9 @@ def do_ecto():
       key_points_to_points_left["points"] >> points_to_point_cloud["image_points"],
       points_to_point_cloud["point_cloud"] >> CloudViewer(window_name="point cloud")["input"],
 
+      matches_to_indices["train_indices"] >> descriptor_picker["indices"],
+      feature_extractor_left["descriptors"] >> descriptor_picker["mat"],
+      descriptor_picker["mat"] >> imshow(name="picked descriptors")["image"],
 
       ]
               
