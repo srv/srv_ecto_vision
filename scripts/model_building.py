@@ -49,6 +49,11 @@ def do_ecto():
 
   descriptor_picker = features3d.ExtractRows()
 
+  model_builder = features3d.ModelBuilder()
+
+  model_points_source, model_points_sink = ecto.EntangledPair(value=model_builder.inputs.at('model_points'))
+  model_descriptors_source, model_descriptors_sink = ecto.EntangledPair(value=model_builder.inputs.at('model_descriptors'))
+
   #setup the processing graph
   graph = [
 
@@ -93,6 +98,16 @@ def do_ecto():
       matches_to_indices["train_indices"] >> descriptor_picker["indices"],
       feature_extractor_left["descriptors"] >> descriptor_picker["mat"],
       descriptor_picker["mat"] >> imshow(name="picked descriptors")["image"],
+
+      points_to_point_cloud["point_cloud"] >> model_builder["input"],
+      descriptor_picker["mat"] >> model_builder["new_descriptors"],
+
+      # feedback loop
+      model_points_source["out"] >> model_builder["model_points"],
+      model_builder["model_points"] >> model_points_sink["in"],
+
+      model_descriptors_source["out"] >> model_builder["model_descriptors"],
+      model_builder["model_descriptors"] >> model_descriptors_sink["in"],
 
       ]
               
